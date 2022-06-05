@@ -2,22 +2,32 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 )
 
-func rootHandler(res http.ResponseWriter, req *http.Request) {
-	fmt.Println("entering root handler")
+func params(res http.ResponseWriter, req *http.Request) {
+	fmt.Println("entering params")
+	version := os.Getenv("VERSION")
+
 	for k, v := range req.Header {
 		res.Header().Set(fmt.Sprintf("%v", k), fmt.Sprintf("%v\n", v))
 	}
+	res.Header().Set("VERSION", version)
 
 }
 
-func main() {
+func healthz(res http.ResponseWriter, req *http.Request) {
+	io.WriteString(res, "OK\n")
+}
 
-	http.HandleFunc("/", rootHandler)
+func main() {
+	http.HandleFunc("/", params)
 	err := http.ListenAndServe(":8000", nil)
+	mux := http.NewServeMux()
+	mux.HandleFunc("/healthz", healthz)
 	if err != nil {
 		log.Fatal(err)
 	}
