@@ -51,7 +51,7 @@ func main() {
 	mux := http.NewServeMux()
 	mux.HandleFunc("/healthz", healthz)
 	mux.HandleFunc("/", params)
-	err := http.ListenAndServe(":8000", mux)
+	err := http.ListenAndServe(":8090", mux)
 	if err != nil {
 		log.Fatal(err)
 	}
