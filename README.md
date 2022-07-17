@@ -45,5 +45,5 @@ docker push harbor.iluvatar.com:1080/httpserver-test/httpserver:v1.0
 * 日常运维需求，日志等级
 * 配置和代码分离
 
-** 答案
-    增加了deploy目录，yaml文件在该目录中
+答案
+   增加了deploy目录，yaml文件在该目录中
